@@ -1,0 +1,98 @@
+{
+   "checksum": "01604d226efa811a27f5ef7b95fc62c2",
+   "roots": {
+      "bookmark_bar": {
+         "children": [ {
+            "date_added": "13370161955449916",
+            "date_last_used": "0",
+            "guid": "35881979-e122-461a-a814-2355c88bbc9b",
+            "id": "10",
+            "meta_info": {
+               "power_bookmark_meta": ""
+            },
+            "name": "IMG_20240905_0001.pdf",
+            "show_icon": false,
+            "source": "sync",
+            "type": "url",
+            "url": "file:///F:/CPNS%20KAB.%20SIGI/IMG_20240905_0001.pdf",
+            "visit_count": 1
+         }, {
+            "date_added": "13422734231792655",
+            "date_last_used": "0",
+            "guid": "8912dd2b-5179-4da8-ba29-ce4a98bb49c8",
+            "id": "9",
+            "name": "ASUS Software Portal - Exclusive technology",
+            "show_icon": false,
+            "source": "oem_preload",
+            "type": "url",
+            "url": "https://www.asus.com/Software-and-Innovations-Portal/",
+            "visit_count": 0
+         }, {
+            "date_added": "13422734231791733",
+            "date_last_used": "0",
+            "guid": "6e27566c-205b-4f2e-979d-b302bd818dc4",
+            "id": "8",
+            "name": "MyASUS Software - Get the best from ASUS PC",
+            "show_icon": false,
+            "source": "oem_preload",
+            "type": "url",
+            "url": "https://www.asus.com/ASUS-Software/",
+            "visit_count": 0
+         }, {
+            "date_added": "13422734231789909",
+            "date_last_used": "0",
+            "guid": "b3990658-50c2-44fe-8fb7-e2b4e95e732d",
+            "id": "7",
+            "name": "McAfee LiveSafe",
+            "show_icon": false,
+            "source": "oem_preload",
+            "type": "url",
+            "url": "https://home.mcafee.com/root/campaign.aspx?cid=247829",
+            "visit_count": 0
+         } ],
+         "date_added": "13422734231423973",
+         "date_last_used": "0",
+         "date_modified": "13422734231792655",
+         "guid": "0bc5d13f-2cba-5d74-951f-3f233fe6c908",
+         "id": "1",
+         "name": "Favorites bar",
+         "source": "unknown",
+         "type": "folder"
+      },
+      "other": {
+         "children": [  ],
+         "date_added": "13422734231423973",
+         "date_last_used": "0",
+         "date_modified": "0",
+         "guid": "82b081ec-3dd3-529c-8475-ab6c344590dd",
+         "id": "2",
+         "name": "Other favorites",
+         "source": "unknown",
+         "type": "folder"
+      },
+      "synced": {
+         "children": [  ],
+         "date_added": "13422734231423973",
+         "date_last_used": "0",
+         "date_modified": "0",
+         "guid": "4cf2e351-0e85-532b-bb37-df045d8f8d0f",
+         "id": "3",
+         "name": "Mobile favorites",
+         "source": "unknown",
+         "type": "folder"
+      },
+      "workspaces_v2": {
+         "children": [  ],
+         "date_added": "13422734231423973",
+         "date_last_used": "0",
+         "date_modified": "0",
+         "guid": "75aa6670-344f-549d-b742-660f029506ab",
+         "id": "5",
+         "name": "Workspaces",
+         "source": "unknown",
+         "type": "folder"
+      }
+   },
+   "sync_metadata": "CkEKHgiIgQISCMz1SgqeAQAAKg4QABgBIAAoBjAAOABAABIAKhhSOUJwUFNWeFNRaTU5SlRHNCtPODh3PT1IA6AGDBKOAQgFEokBChx3UkJyWkwrNlBBOWF2S2dqTlA3SlhETGNmdnM9EiRhYTg1MDI4YS1jNTUxLTVhOGQtYTM1OS1lMTZiNzhjMTljMjEYACAAKAAwwdH3zpMzOKLU986TM0Ci1PfOkzNKHG5teDY1c1FEdnhJOFRnRWV2K0ErbnR0b1NuND1aAGUAAAAAwj4CYAASrAEIChKnAQocbEtheEluc2hoWkFCazdQdGVpaDJLVXBQRE04PRIkMzU4ODE5NzktZTEyMi00NjFhLWE4MTQtMjM1NWM4OGJiYzliGAAgACgAMMHc1b+JMzjJ7s2+nDJAye7NvpwyShw0aFF4S3BmOGo5VXhpSmRqWlBWSHhMOEtRVk09Wh4iHHk1T05nR1RPWDhWUVR0RkN5RWd2SENaUDRjQT1ld3Bso8I+AmAFEo4BCAESiQEKHHl4Si82ZnZrZWNyN2twNUVRekI0dFdMcGRiRT0SJDA3NWM2MDZlLWI3NjAtNTcwMi1iYzJmLTJjOGUwNjM2OTk5ZBgAIAAoADC08/WfmjI4zvr1n5oyQM769Z+aMkocYVJDV0xnaEY5YjVJbnFLSUR2dUovanZRa0ZjPVoAZQAAAADCPgJgABKOAQgCEokBChxZY1NUb252RVNQd3FDczRMMmNyVmh2NjhMOTg9EiRmOWE1OGVlZC0xOTMxLTU5MDItODI4Ni02MTJlMTRjZmQ3NjgYACAAKAAwtfP1n5oyOPb69Z+aMkD2+vWfmjJKHG9QVmtod0JSYlY2NUtDV1IyK0lPTkhXb091OD1aAGUAAAAAwj4CYAASjgEIAxKJAQocbmpnRHU4OGVDcnZYcDg2cEQ3ZkhHY3FGcDg4PRIkNGUxMTQ3OTAtNThiMi01ZjJhLTg3OTAtMzM1M2Q2NTNkOGM3GAAgACgAMLrz9Z+aMjiw+/WfmjJAsPv1n5oyShx5ek5CMDFjbjU0QTdjUlUwdVQrL1BnbVR0VW89WgBlAAAAAMI+AmAAMAA4AA==",
+   "version": 1
+}
