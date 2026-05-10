@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import '../services/api_service.dart';
+import '../models/mahasiswa.dart';
 
 class InputScreen extends StatefulWidget {
   const InputScreen({super.key});
@@ -12,6 +14,7 @@ class _InputScreenState extends State<InputScreen> {
   final _nimController = TextEditingController();
   final _namaController = TextEditingController();
   final _jurusanController = TextEditingController();
+  final ApiService _apiService = ApiService(baseUrl: 'http://localhost:3000'); // Ganti dengan baseUrl yang sesuai
 
   @override
   void dispose() {
@@ -21,19 +24,32 @@ class _InputScreenState extends State<InputScreen> {
     super.dispose();
   }
 
-  // TODO Dareean: ganti print() ini dengan addMahasiswa() dari api_service.dart
-  void simpanDataKeAPI() {
-    print('NIM: ${_nimController.text}');
-    print('Nama: ${_namaController.text}');
-    print('Jurusan: ${_jurusanController.text}');
-
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('Data ${_namaController.text} disimpan!')),
+  Future<void> simpanDataKeAPI() async {
+    final mahasiswa = Mahasiswa(
+      nim: _nimController.text,
+      nama: _namaController.text,
+      jurusan: _jurusanController.text,
     );
 
-    _nimController.clear();
-    _namaController.clear();
-    _jurusanController.clear();
+    try {
+      final success = await _apiService.addMahasiswa(mahasiswa);
+      if (success) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Data Mahasiswa Berhasil Ditambahkan')),
+        );
+        _nimController.clear();
+        _namaController.clear();
+        _jurusanController.clear();
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Gagal menambahkan data mahasiswa')),
+        );
+      }
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Error: $e')),
+      );
+    }
   }
 
   @override

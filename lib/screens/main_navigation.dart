@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'list_screen.dart';
 import 'input_screen.dart';
-import 'profile_screen.dart';
 
 class MainNavigation extends StatefulWidget {
   const MainNavigation({super.key});
@@ -13,7 +12,10 @@ class MainNavigation extends StatefulWidget {
 class _MainNavigationState extends State<MainNavigation> {
   int _selectedIndex = 0;
 
-  final List<Widget> _screens = [ListScreen(), InputScreen(), ProfileScreen()];
+  static const List<Widget> _screens = [
+    ListScreen(),
+    InputScreen(),
+  ];
 
   void _onItemTapped(int index) {
     setState(() {
@@ -32,7 +34,6 @@ class _MainNavigationState extends State<MainNavigation> {
         items: const [
           BottomNavigationBarItem(icon: Icon(Icons.list), label: 'List'),
           BottomNavigationBarItem(icon: Icon(Icons.add_circle), label: 'Input'),
-          BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
         ],
       ),
     );
