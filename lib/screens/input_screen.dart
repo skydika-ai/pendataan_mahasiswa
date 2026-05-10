@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../services/api_service.dart';
-import '../models/mahasiswa.dart';
+import 'package:provider/provider.dart';
+import '../providers/mahasiswa_provider.dart';
 
 class InputScreen extends StatefulWidget {
   const InputScreen({super.key});
@@ -14,7 +14,6 @@ class _InputScreenState extends State<InputScreen> {
   final _nimController = TextEditingController();
   final _namaController = TextEditingController();
   final _jurusanController = TextEditingController();
-  final ApiService _apiService = ApiService(baseUrl: 'http://localhost:3000'); // Ganti dengan baseUrl yang sesuai
 
   @override
   void dispose() {
@@ -24,36 +23,36 @@ class _InputScreenState extends State<InputScreen> {
     super.dispose();
   }
 
-  Future<void> simpanDataKeAPI() async {
-    final mahasiswa = Mahasiswa(
-      nim: _nimController.text,
-      nama: _namaController.text,
-      jurusan: _jurusanController.text,
+  Future<void> _simpanData() async {
+    if (!_formKey.currentState!.validate()) return;
+
+    final provider = context.read<MahasiswaProvider>();
+    final berhasil = await provider.addMahasiswa(
+      _nimController.text,
+      _namaController.text,
+      _jurusanController.text,
     );
 
-    try {
-      final success = await _apiService.addMahasiswa(mahasiswa);
-      if (success) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Data Mahasiswa Berhasil Ditambahkan')),
-        );
-        _nimController.clear();
-        _namaController.clear();
-        _jurusanController.clear();
-      } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Gagal menambahkan data mahasiswa')),
-        );
-      }
-    } catch (e) {
+    if (!mounted) return;
+
+    if (berhasil) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Error: $e')),
+        const SnackBar(content: Text('Data mahasiswa berhasil ditambahkan')),
+      );
+      _nimController.clear();
+      _namaController.clear();
+      _jurusanController.clear();
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(provider.errorMessage ?? 'Gagal menyimpan data')),
       );
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    final isLoading = context.watch<MahasiswaProvider>().isLoading;
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Input Mahasiswa'),
@@ -74,7 +73,7 @@ class _InputScreenState extends State<InputScreen> {
                   labelText: 'NIM',
                   border: OutlineInputBorder(),
                 ),
-                validator: (v) => v!.isEmpty ? 'NIM wajib diisi' : null,
+                validator: (value) => value!.isEmpty ? 'NIM wajib diisi' : null,
               ),
               const SizedBox(height: 16),
               TextFormField(
@@ -83,7 +82,7 @@ class _InputScreenState extends State<InputScreen> {
                   labelText: 'Nama Lengkap',
                   border: OutlineInputBorder(),
                 ),
-                validator: (v) => v!.isEmpty ? 'Nama wajib diisi' : null,
+                validator: (value) => value!.isEmpty ? 'Nama wajib diisi' : null,
               ),
               const SizedBox(height: 16),
               TextFormField(
@@ -92,23 +91,21 @@ class _InputScreenState extends State<InputScreen> {
                   labelText: 'Jurusan',
                   border: OutlineInputBorder(),
                 ),
-                validator: (v) => v!.isEmpty ? 'Jurusan wajib diisi' : null,
+                validator: (value) => value!.isEmpty ? 'Jurusan wajib diisi' : null,
               ),
               const SizedBox(height: 28),
               SizedBox(
                 width: double.infinity,
                 height: 50,
                 child: ElevatedButton(
-                  onPressed: () {
-                    if (_formKey.currentState!.validate()) {
-                      simpanDataKeAPI();
-                    }
-                  },
+                  onPressed: isLoading ? null : _simpanData,
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.indigo,
                     foregroundColor: Colors.white,
                   ),
-                  child: const Text('Simpan', style: TextStyle(fontSize: 16)),
+                  child: isLoading
+                      ? const CircularProgressIndicator(color: Colors.white)
+                      : const Text('Simpan', style: TextStyle(fontSize: 16)),
                 ),
               ),
             ],
