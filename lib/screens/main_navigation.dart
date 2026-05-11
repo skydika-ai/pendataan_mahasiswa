@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'list_screen.dart';
+import '../widgets/list_screen.dart';
 import 'input_screen.dart';
 
 class MainNavigation extends StatefulWidget {
@@ -12,10 +12,7 @@ class MainNavigation extends StatefulWidget {
 class _MainNavigationState extends State<MainNavigation> {
   int _selectedIndex = 0;
 
-  static const List<Widget> _screens = [
-    ListScreen(),
-    InputScreen(),
-  ];
+  static const List<Widget> _screens = [ListScreen(), InputScreen()];
 
   void _onItemTapped(int index) {
     setState(() {
