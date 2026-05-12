@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
         title: 'Pendataan Mahasiswa',
         debugShowCheckedModeBanner: false,
         theme: AppTheme.light(),
-        home: const LoginScreen(), // ← ganti ini
+        home: const LoginScreen(), 
       ),
     );
   }
