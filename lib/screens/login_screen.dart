@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'main_navigation.dart';
+import '../theme/app_theme.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -40,24 +41,27 @@ class _LoginScreenState extends State<LoginScreen> {
       body: Container(
         decoration: const BoxDecoration(
           gradient: LinearGradient(
-            colors: [Color(0xFF3F51B5), Color(0xFF7C4DFF)],
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
+            colors: [Color(0xFFF8F6F2), Color(0xFFE8EEEA)],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
           ),
         ),
         child: Center(
           child: SingleChildScrollView(
-            padding: const EdgeInsets.all(28),
+            padding: const EdgeInsets.all(24),
             child: Container(
-              padding: const EdgeInsets.all(28),
+              constraints: const BoxConstraints(maxWidth: 420),
+              margin: const EdgeInsets.symmetric(horizontal: 8),
+              padding: const EdgeInsets.all(24),
               decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(24),
+                color: Colors.white.withOpacity(0.92),
+                borderRadius: BorderRadius.circular(28),
+                border: Border.all(color: AppTheme.border),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black.withOpacity(0.15),
-                    blurRadius: 20,
-                    offset: const Offset(0, 8),
+                    color: Colors.black.withOpacity(0.08),
+                    blurRadius: 30,
+                    offset: const Offset(0, 14),
                   ),
                 ],
               ),
@@ -65,54 +69,41 @@ class _LoginScreenState extends State<LoginScreen> {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Container(
-                    padding: const EdgeInsets.all(16),
+                    padding: const EdgeInsets.all(14),
                     decoration: BoxDecoration(
-                      color: const Color(0xFF3F51B5).withOpacity(0.1),
+                      color: AppTheme.primarySoft,
                       shape: BoxShape.circle,
                     ),
                     child: const Icon(
                       Icons.school,
-                      size: 52,
-                      color: Color(0xFF3F51B5),
+                      size: 46,
+                      color: AppTheme.primary,
                     ),
                   ),
-                  const SizedBox(height: 20),
+                  const SizedBox(height: 18),
                   const Text(
                     'Pendataan Mahasiswa',
                     style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                      color: Color(0xFF3F51B5),
+                      fontSize: 22,
+                      fontWeight: FontWeight.w700,
+                      color: AppTheme.textPrimary,
                     ),
                   ),
-                  const SizedBox(height: 4),
+                  const SizedBox(height: 6),
                   const Text(
-                    'Masuk sebagai Admin',
-                    style: TextStyle(fontSize: 13, color: Colors.grey),
+                    'Masuk untuk mengelola data dengan tampilan yang lebih tenang',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(fontSize: 13, color: AppTheme.textSecondary),
                   ),
-                  const SizedBox(height: 28),
+                  const SizedBox(height: 24),
                   TextField(
                     controller: _usernameController,
                     decoration: InputDecoration(
                       labelText: 'Username',
                       prefixIcon: const Icon(Icons.person_outline),
-                      filled: true,
-                      fillColor: Colors.grey.shade50,
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(12),
-                        borderSide: BorderSide.none,
-                      ),
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(12),
-                        borderSide: BorderSide(color: Colors.grey.shade200),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(12),
-                        borderSide: const BorderSide(color: Color(0xFF3F51B5)),
-                      ),
                     ),
                   ),
-                  const SizedBox(height: 14),
+                  const SizedBox(height: 12),
                   TextField(
                     controller: _passwordController,
                     obscureText: !_isPasswordVisible,
@@ -124,29 +115,15 @@ class _LoginScreenState extends State<LoginScreen> {
                           _isPasswordVisible
                               ? Icons.visibility
                               : Icons.visibility_off,
-                          color: Colors.grey,
+                          color: AppTheme.textSecondary,
                         ),
                         onPressed: () => setState(
                           () => _isPasswordVisible = !_isPasswordVisible,
                         ),
                       ),
-                      filled: true,
-                      fillColor: Colors.grey.shade50,
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(12),
-                        borderSide: BorderSide.none,
-                      ),
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(12),
-                        borderSide: BorderSide(color: Colors.grey.shade200),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(12),
-                        borderSide: const BorderSide(color: Color(0xFF3F51B5)),
-                      ),
                     ),
                   ),
-                  const SizedBox(height: 8),
+                  const SizedBox(height: 10),
                   if (_errorMessage != null)
                     Padding(
                       padding: const EdgeInsets.only(top: 4),
@@ -160,10 +137,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           const SizedBox(width: 6),
                           Text(
                             _errorMessage!,
-                            style: const TextStyle(
-                              color: Colors.red,
-                              fontSize: 13,
-                            ),
+                            style: const TextStyle(color: Colors.red, fontSize: 13),
                           ),
                         ],
                       ),
@@ -171,23 +145,10 @@ class _LoginScreenState extends State<LoginScreen> {
                   const SizedBox(height: 20),
                   SizedBox(
                     width: double.infinity,
-                    height: 50,
                     child: ElevatedButton(
                       onPressed: _login,
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color(0xFF3F51B5),
-                        foregroundColor: Colors.white,
-                        elevation: 2,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                      ),
                       child: const Text(
                         'Masuk',
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                        ),
                       ),
                     ),
                   ),

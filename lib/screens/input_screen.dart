@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/mahasiswa_provider.dart';
+import '../theme/app_theme.dart';
 
 class InputScreen extends StatefulWidget {
   const InputScreen({super.key});
@@ -26,29 +27,7 @@ class _InputScreenState extends State<InputScreen> {
   InputDecoration _fieldDecoration(String label, IconData icon) {
     return InputDecoration(
       labelText: label,
-      prefixIcon: Icon(icon, color: const Color(0xFF3F51B5)),
-      filled: true,
-      fillColor: Colors.grey.shade50,
-      border: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(12),
-        borderSide: BorderSide.none,
-      ),
-      enabledBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(12),
-        borderSide: BorderSide(color: Colors.grey.shade200),
-      ),
-      focusedBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(12),
-        borderSide: const BorderSide(color: Color(0xFF3F51B5), width: 1.5),
-      ),
-      errorBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(12),
-        borderSide: const BorderSide(color: Colors.red),
-      ),
-      focusedErrorBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(12),
-        borderSide: const BorderSide(color: Colors.red),
-      ),
+      prefixIcon: Icon(icon, color: AppTheme.primary),
     );
   }
 
@@ -103,33 +82,28 @@ class _InputScreenState extends State<InputScreen> {
     final isLoading = context.watch<MahasiswaProvider>().isLoading;
 
     return Scaffold(
-      backgroundColor: const Color(0xFFF4F6FB),
       appBar: AppBar(
         title: const Text(
           'Tambah Mahasiswa',
-          style: TextStyle(fontWeight: FontWeight.bold),
+          style: TextStyle(fontWeight: FontWeight.w600),
         ),
-        backgroundColor: const Color(0xFF3F51B5),
-        foregroundColor: Colors.white,
-        centerTitle: true,
-        elevation: 0,
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(20),
         child: Column(
           children: [
-            const SizedBox(height: 8),
             Container(
               width: double.infinity,
               padding: const EdgeInsets.all(20),
               decoration: BoxDecoration(
                 color: Colors.white,
-                borderRadius: BorderRadius.circular(16),
+                borderRadius: BorderRadius.circular(24),
+                border: Border.all(color: AppTheme.border),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black.withOpacity(0.06),
-                    blurRadius: 10,
-                    offset: const Offset(0, 4),
+                    color: Colors.black.withOpacity(0.05),
+                    blurRadius: 24,
+                    offset: const Offset(0, 10),
                   ),
                 ],
               ),
@@ -141,9 +115,9 @@ class _InputScreenState extends State<InputScreen> {
                     const Text(
                       'Informasi Mahasiswa',
                       style: TextStyle(
-                        fontWeight: FontWeight.bold,
+                        fontWeight: FontWeight.w700,
                         fontSize: 15,
-                        color: Color(0xFF3F51B5),
+                        color: AppTheme.textPrimary,
                       ),
                     ),
                     const SizedBox(height: 16),
@@ -190,18 +164,7 @@ class _InputScreenState extends State<InputScreen> {
                             : const Icon(Icons.save_outlined),
                         label: Text(
                           isLoading ? 'Menyimpan...' : 'Simpan Data',
-                          style: const TextStyle(
-                            fontSize: 15,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: const Color(0xFF3F51B5),
-                          foregroundColor: Colors.white,
-                          elevation: 2,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(12),
-                          ),
+                          style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
                         ),
                       ),
                     ),

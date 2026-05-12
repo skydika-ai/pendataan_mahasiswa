@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../widgets/list_screen.dart';
 import 'input_screen.dart';
+import '../theme/app_theme.dart';
 
 class MainNavigation extends StatefulWidget {
   const MainNavigation({super.key});
@@ -19,23 +20,21 @@ class _MainNavigationState extends State<MainNavigation> {
     return Scaffold(
       body: _screens[_selectedIndex],
       bottomNavigationBar: Container(
-        decoration: BoxDecoration(
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.08),
-              blurRadius: 10,
-              offset: const Offset(0, -2),
-            ),
-          ],
+        decoration: const BoxDecoration(
+          color: Colors.white,
+          border: Border(top: BorderSide(color: AppTheme.border)),
         ),
-        child: BottomNavigationBar(
+        child: SafeArea(
+          top: false,
+          child: BottomNavigationBar(
           currentIndex: _selectedIndex,
           onTap: (index) => setState(() => _selectedIndex = index),
-          selectedItemColor: const Color(0xFF3F51B5),
-          unselectedItemColor: Colors.grey,
+          selectedItemColor: AppTheme.primary,
+          unselectedItemColor: AppTheme.textSecondary,
           backgroundColor: Colors.white,
           type: BottomNavigationBarType.fixed,
-          selectedLabelStyle: const TextStyle(fontWeight: FontWeight.bold),
+          elevation: 0,
+          selectedLabelStyle: const TextStyle(fontWeight: FontWeight.w600),
           items: const [
             BottomNavigationBarItem(
               icon: Icon(Icons.people_outline),
@@ -48,6 +47,7 @@ class _MainNavigationState extends State<MainNavigation> {
               label: 'Tambah',
             ),
           ],
+        ),
         ),
       ),
     );

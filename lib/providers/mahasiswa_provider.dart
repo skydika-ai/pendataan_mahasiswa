@@ -51,6 +51,36 @@ class MahasiswaProvider extends ChangeNotifier {
     }
   }
 
+  Future<bool> updateMahasiswa(
+    String id,
+    String nim,
+    String nama,
+    String jurusan,
+  ) async {
+    _isLoading = true;
+    _errorMessage = null;
+    notifyListeners();
+
+    try {
+      final mahasiswaUpdate = Mahasiswa(
+        id: id,
+        nim: nim,
+        nama: nama,
+        jurusan: jurusan,
+      );
+      final berhasil = await _apiService.updateMahasiswa(mahasiswaUpdate);
+      if (berhasil) {
+        await fetchMahasiswa();
+      }
+      return berhasil;
+    } catch (e) {
+      _errorMessage = 'Gagal memperbarui data: $e';
+      _isLoading = false;
+      notifyListeners();
+      return false;
+    }
+  }
+
   // ← deleteMahasiswa di DALAM class
   Future<bool> deleteMahasiswa(String id) async {
     try {

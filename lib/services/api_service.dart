@@ -51,6 +51,20 @@ class ApiService {
     return resp.statusCode == 200 || resp.statusCode == 201;
   }
 
+  Future<bool> updateMahasiswa(Mahasiswa m) async {
+    if (m.id == null) {
+      throw Exception('Mahasiswa tidak memiliki ID');
+    }
+
+    final uri = Uri.parse('$baseUrl/mahasiswa/${m.id}');
+    final resp = await _client.put(
+      uri,
+      headers: {'Content-Type': 'application/json'},
+      body: json.encode(m.toJson()),
+    );
+    return resp.statusCode == 200 || resp.statusCode == 201;
+  }
+
   Future<bool> deleteMahasiswa(String id) async {
     final uri = Uri.parse('$baseUrl/mahasiswa/$id');
     final resp = await _client.delete(uri);

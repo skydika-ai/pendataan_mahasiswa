@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'screens/main_navigation.dart';
 import 'screens/login_screen.dart'; // ← tambah import ini
 import 'services/api_service.dart';
 import 'providers/mahasiswa_provider.dart';
+import 'theme/app_theme.dart';
 
 void main() {
   runApp(const MyApp());
@@ -21,10 +21,7 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         title: 'Pendataan Mahasiswa',
         debugShowCheckedModeBanner: false,
-        theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.pink),
-          useMaterial3: true,
-        ),
+        theme: AppTheme.light(),
         home: const LoginScreen(), // ← ganti ini
       ),
     );
