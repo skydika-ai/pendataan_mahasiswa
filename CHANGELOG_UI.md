@@ -7,7 +7,25 @@ Transformasi UI dari tampilan yang kaku menjadi modern-minimalis dengan sentuhan
 
 ## 🎨 File Baru Dibuat
 
-### 1. **lib/theme/app_theme.dart** ✨
+### 0. **lib/screens/register_screen.dart** 🆕 (UPDATE)
+**Perubahan:** Halaman pendaftaran akun baru
+- **Form registrasi:** Nama, Username, Password, Konfirmasi Password
+- **Validasi:** Panjang minimal, kesamaan password, username unik
+- **Loading state:** Loading spinner saat proses registrasi
+- **Error handling:** Tampilkan pesan error yang jelas
+- **Navigasi:** Link "Sudah punya akun?" untuk kembali ke login
+- **Design:** Konsisten dengan login screen (gradient, border soft, tema AppTheme)
+
+### 1. **lib/services/user_service.dart** 🆕 (UPDATE)
+**Perubahan:** Service untuk manage user registration & login
+- **User class:** Model user dengan name, username, password
+- **register():** Method async untuk daftar user baru
+- **login():** Method async untuk validasi login
+- **_registeredUsers:** List in-memory untuk simpan user (simulasi database)
+- **Validasi:** Username unik, password match
+- **Delay simulasi:** 800ms untuk register, 600ms untuk login (terasa real)
+
+### 3. **lib/theme/app_theme.dart** ✨
 **Perubahan:** File tema pusat untuk seluruh aplikasi
 - **Warna utama:** Berubah dari indigo/purple (0xFF3F51B5, 0xFF7C4DFF) → slate/olive (0xFF2F4A46)
 - **Palet netral:** Latar abu-abu hangat (0xFFF6F4F0) hingga hijau soft (0xFFE7EEEA)
@@ -17,7 +35,7 @@ Transformasi UI dari tampilan yang kaku menjadi modern-minimalis dengan sentuhan
   - Card dengan border halus, tidak ada shadow keras
 - **Konsistensi:** Semua komponen Flutter Material 3 menggunakan tema ini
 
-### 2. **lib/screens/profile_screen.dart** 🆕
+### 4. **lib/screens/profile_screen.dart** 🆕
 **Perubahan:** Halaman detail profil mahasiswa yang baru
 - **Header premium:** Gradient soft dari putih ke hijau muda dengan elemen dekoratif abstrak
 - **Mode edit:** Toggle Edit/Lihat profil langsung di halaman
@@ -50,14 +68,17 @@ theme: AppTheme.light()
 - **Icon:** Sekolah dalam circle soft primary
 - **Tombol:** Primary color (0xFF2F4A46), round 16px
 
-### 5. **lib/screens/main_navigation.dart** 🔀
-**Perubahan:** Bottom navigation lebih clean
-- **Border:** Ganti shadow menjadi border top halus (0xFFE5E7EB)
-- **Warna:** Selected item → primary (0xFF2F4A46), unselected → textSecondary (0xFF6B7280)
-- **Spacing:** SafeArea untuk notch handling lebih baik
-- **Label:** Fontweight 600 untuk selected
+### 5. **lib/screens/login_screen.dart** 📱 (UPDATE)
+**Perubahan:** Login terintegrasi dengan UserService
+- **UserService integration:** Ganti validasi hardcoded → call UserService.login()
+- **Async login:** _login() sekarang Future<void> dengan loading state
+- **Loading spinner:** ElevatedButton dengan icon loading saat proses
+- **Disabled inputs:** TextField disable saat loading untuk prevent double-submit
+- **Error handling:** Expanded untuk multi-line error messages
+- **Register link:** Tombol "Daftar di sini" navigasi ke RegisterScreen
+- **Navigation:** Kembali ke MainNavigation setelah login sukses
 
-### 6. **lib/screens/input_screen.dart** ➕
+### 6. **lib/screens/main_navigation.dart** 🔀
 **Perubahan:** Form tambah mahasiswa
 - **Background:** Hapus warna biru muda, pakai background AppTheme
 - **AppBar:** Warna transparan, mengikuti tema
@@ -65,7 +86,15 @@ theme: AppTheme.light()
 - **Input:** Menggunakan InputDecorationTheme dari AppTheme
 - **Button:** Primary color, loading spinner, radius 16px
 
-### 7. **lib/screens/item_card.dart** 🎴
+### 7. **lib/screens/input_screen.dart** ➕
+**Perubahan:** Form tambah mahasiswa
+- **Background:** Hapus warna biru muda, pakai background AppTheme
+- **AppBar:** Warna transparan, mengikuti tema
+- **Form container:** White dengan border soft, shadow ringan, radius 24px
+- **Input:** Menggunakan InputDecorationTheme dari AppTheme
+- **Button:** Primary color, loading spinner, radius 16px
+
+### 8. **lib/screens/item_card.dart** 🎴
 **Perubahan 1 (awal):** Hapus hardcoded warna
 - Avatar color array dari indigo/purple → primary + warna soft (slate, hijau, coklat, ungu, tan)
 
@@ -77,7 +106,7 @@ theme: AppTheme.light()
 - **Action:** Edit profil di kiri, delete di kanan
 - **Dekor:** Circle abstrak blur di sudut kanan (avatar color dengan opacity rendah)
 
-### 8. **lib/widgets/list_screen.dart** 📊
+### 9. **lib/widgets/list_screen.dart** 📊
 **Perubahan 1 (medium):** Dashboard dengan statistik
 - Tambah state `_query` untuk pencarian
 - Filter data berdasarkan nama/NIM/jurusan
@@ -99,7 +128,7 @@ theme: AppTheme.light()
 - **Result counter:** Icon list_alt, text "Menampilkan X mahasiswa" atau "Hasil: Y data"
 - **Empty state:** Icon search_off, teks ajakan yang friendly
 
-### 9. **lib/services/api_service.dart** 🌐
+### 10. **lib/services/api_service.dart** 🌐
 **Perubahan:** Tambah method update
 ```dart
 Future<bool> updateMahasiswa(Mahasiswa m) async {
@@ -113,7 +142,7 @@ Future<bool> updateMahasiswa(Mahasiswa m) async {
 }
 ```
 
-### 10. **lib/providers/mahasiswa_provider.dart** 🔌
+### 11. **lib/providers/mahasiswa_provider.dart** 🔌
 **Perubahan:** Tambah method update
 ```dart
 Future<bool> updateMahasiswa(
@@ -132,6 +161,8 @@ Future<bool> updateMahasiswa(
 
 | Fitur | Lokasi | Deskripsi |
 |-------|--------|-----------|
+| **User Registration** | RegisterScreen, UserService | Daftar akun baru dengan validasi username unik & password match |
+| **User Login** | LoginScreen, UserService | Login dengan akun terdaftar atau demo (admin/1234) |
 | **Profil Halaman Penuh** | ProfileScreen | Klik avatar/profil → halaman detail premium dengan edit mode |
 | **Edit Data Langsung** | ProfileScreen | Toggle edit dari halaman profil, ubah NIM/Nama/Jurusan, simpan |
 | **API Update** | ApiService, Provider | PUT request untuk update data mahasiswa |
@@ -201,8 +232,8 @@ Future<bool> updateMahasiswa(
 
 | Kategori | Jumlah File | Status |
 |----------|------------|--------|
-| File baru | 2 | ✅ Dibuat |
-| File major edit | 8 | ✅ Updated |
+| File baru | 3 | ✅ Dibuat (RegisterScreen, UserService, ProfileScreen) |
+| File major edit | 9 | ✅ Updated |
 | API/Provider | 2 | ✅ Enhanced |
 | Test | - | ⚠️ Manual only |
 | Error | 0 | ✅ Clean |
