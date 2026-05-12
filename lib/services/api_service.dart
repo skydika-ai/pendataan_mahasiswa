@@ -8,7 +8,8 @@ class ApiService {
   final String baseUrl;
   final http.Client _client;
 
-  ApiService({required this.baseUrl, http.Client? client}) : _client = client ?? http.Client();
+  ApiService({required this.baseUrl, http.Client? client})
+    : _client = client ?? http.Client();
 
   /// Fetch list of mahasiswa from server.
   ///
@@ -16,13 +17,20 @@ class ApiService {
   /// array of mahasiswa objects or an object containing a `data` array.
   Future<List<Mahasiswa>> fetchMahasiswa() async {
     final uri = Uri.parse('$baseUrl/mahasiswa');
-    final resp = await _client.get(uri, headers: {'Content-Type': 'application/json'});
+    final resp = await _client.get(
+      uri,
+      headers: {'Content-Type': 'application/json'},
+    );
     if (resp.statusCode == 200) {
       final body = json.decode(resp.body);
       if (body is List) {
-        return body.map((e) => Mahasiswa.fromJson(e as Map<String, dynamic>)).toList();
+        return body
+            .map((e) => Mahasiswa.fromJson(e as Map<String, dynamic>))
+            .toList();
       } else if (body is Map && body['data'] is List) {
-        return (body['data'] as List).map((e) => Mahasiswa.fromJson(e as Map<String, dynamic>)).toList();
+        return (body['data'] as List)
+            .map((e) => Mahasiswa.fromJson(e as Map<String, dynamic>))
+            .toList();
       } else {
         throw Exception('Unexpected response format');
       }
@@ -41,5 +49,11 @@ class ApiService {
       body: json.encode(m.toJson()),
     );
     return resp.statusCode == 200 || resp.statusCode == 201;
+  }
+
+  Future<bool> deleteMahasiswa(String id) async {
+    final uri = Uri.parse('$baseUrl/mahasiswa/$id');
+    final resp = await _client.delete(uri);
+    return resp.statusCode == 200;
   }
 }

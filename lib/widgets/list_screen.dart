@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-
-import '../models/mahasiswa.dart';
+import 'package:provider/provider.dart';
+import '../providers/mahasiswa_provider.dart';
 import '../screens/item_card.dart';
 
 class ListScreen extends StatefulWidget {
@@ -11,112 +11,112 @@ class ListScreen extends StatefulWidget {
 }
 
 class _ListScreenState extends State<ListScreen> {
-  late Future<List<Mahasiswa>> futureMahasiswa;
-
   @override
   void initState() {
     super.initState();
-
-    // dummy data sementara
-    futureMahasiswa = Future.delayed(
-      const Duration(seconds: 2),
-
-      () => [
-        Mahasiswa(
-          nim: 'F55124001',
-          nama: 'Melin Oktafiani',
-          jurusan: 'Teknik Informatika',
-        ),
-
-        Mahasiswa(
-          nim: 'F55124002',
-          nama: 'Andika',
-          jurusan: 'Sistem Informasi',
-        ),
-
-        Mahasiswa(
-          nim: 'F55124003',
-          nama: 'Abdul Haikal',
-          jurusan: 'Teknik Informatika',
-        ),
-      ],
-    );
+    Future.microtask(() => context.read<MahasiswaProvider>().fetchMahasiswa());
   }
 
   @override
   Widget build(BuildContext context) {
+    final provider = context.watch<MahasiswaProvider>();
+
     return Scaffold(
-      backgroundColor: Colors.grey.shade100,
-
+      backgroundColor: const Color(0xFFF4F6FB),
       appBar: AppBar(
-        title: const Text('List Mahasiswa'),
-
-        backgroundColor: Colors.pink,
-
+        title: const Text(
+          'Data Mahasiswa',
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
+        backgroundColor: const Color(0xFF3F51B5),
         foregroundColor: Colors.white,
-
         centerTitle: true,
+        elevation: 0,
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.refresh),
+            onPressed: () => context.read<MahasiswaProvider>().fetchMahasiswa(),
+          ),
+        ],
       ),
-
-      body: FutureBuilder<List<Mahasiswa>>(
-        future: futureMahasiswa,
-
-        builder: (context, snapshot) {
-          // loading
-          if (snapshot.connectionState == ConnectionState.waiting) {
+      body: Builder(
+        builder: (_) {
+          if (provider.isLoading) {
             return const Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
-
                 children: [
-                  CircularProgressIndicator(),
-
-                  SizedBox(height: 15),
-
-                  Text('Memuat data mahasiswa...'),
+                  CircularProgressIndicator(color: Color(0xFF3F51B5)),
+                  SizedBox(height: 14),
+                  Text('Memuat data...', style: TextStyle(color: Colors.grey)),
                 ],
               ),
             );
           }
 
-          // error
-          if (snapshot.hasError) {
-            return Center(child: Text('Error: ${snapshot.error}'));
-          }
-
-          // data kosong
-          if (!snapshot.hasData || snapshot.data!.isEmpty) {
-            return const Center(
+          if (provider.errorMessage != null) {
+            return Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
-
                 children: [
-                  Icon(Icons.inbox, size: 80, color: Colors.grey),
-
-                  SizedBox(height: 10),
-
-                  Text('Data mahasiswa kosong', style: TextStyle(fontSize: 18)),
+                  const Icon(Icons.wifi_off, size: 60, color: Colors.grey),
+                  const SizedBox(height: 12),
+                  Text(
+                    provider.errorMessage!,
+                    style: const TextStyle(color: Colors.grey),
+                  ),
                 ],
               ),
             );
           }
 
-          final mahasiswa = snapshot.data!;
+          if (provider.daftarMahasiswa.isEmpty) {
+            return const Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(Icons.people_outline, size: 80, color: Colors.grey),
+                  SizedBox(height: 12),
+                  Text(
+                    'Belum ada data mahasiswa',
+                    style: TextStyle(fontSize: 16, color: Colors.grey),
+                  ),
+                ],
+              ),
+            );
+          }
 
-          return RefreshIndicator(
-            onRefresh: () async {
-              setState(() {});
-            },
-
-            child: ListView.builder(
-              padding: const EdgeInsets.only(top: 10, bottom: 10),
-
-              itemCount: mahasiswa.length,
-
-              itemBuilder: (context, index) {
-                return ItemCard(mahasiswa: mahasiswa[index]);
-              },
-            ),
+          return Column(
+            children: [
+              Container(
+                width: double.infinity,
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 10,
+                ),
+                color: const Color(0xFF3F51B5).withOpacity(0.08),
+                child: Text(
+                  'Total: ${provider.daftarMahasiswa.length} mahasiswa',
+                  style: const TextStyle(
+                    color: Color(0xFF3F51B5),
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ),
+              Expanded(
+                child: RefreshIndicator(
+                  color: const Color(0xFF3F51B5),
+                  onRefresh: () =>
+                      context.read<MahasiswaProvider>().fetchMahasiswa(),
+                  child: ListView.builder(
+                    padding: const EdgeInsets.symmetric(vertical: 8),
+                    itemCount: provider.daftarMahasiswa.length,
+                    itemBuilder: (context, index) =>
+                        ItemCard(mahasiswa: provider.daftarMahasiswa[index]),
+                  ),
+                ),
+              ),
+            ],
           );
         },
       ),
